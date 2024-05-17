@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: hsl(300, 7.7%, 94.9%);
+}
+
+.error {
+  --hue: 355;
+  --saturation: 69%;
+  --lightness: 51%;
+}
+
+.warning {
+  --hue: 29;
+  --saturation: 69%;
+  --lightness: 51%;
+}
+
+.info {
+  --hue: 221;
+  --saturation: 69%;
+  --lightness: 51%;
+}
+
+.success {
+  --hue: 132;
+  --saturation: 69%;
+  --lightness: 51%;
+}
+
+.primary {
+  --hue: 191;
+  --saturation: 71%;
+  --lightness: 40.6%;
+}
+
+.secondary {
+  --hue: 208;
+  --saturation: 8.5%;
+  --lightness: 39%;
+}
