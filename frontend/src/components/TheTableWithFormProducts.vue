@@ -62,6 +62,8 @@ type Alert = {
 
 const products = ref(<Product[]>[]);
 const alerts = ref(<Alert[]>[]);
+const isButtonSubmitDisabled = ref(false);
+const isButtonCancelDisabled = ref(false);
 
 let id = 1;
 let currentAlertId = 1;
@@ -98,10 +100,14 @@ async function submit() {
     return;
   }
   try {
+    isButtonSubmitDisabled.value = true;
+    isButtonCancelDisabled.value = true;
     await createProducts(products.value);
     addAlert("Документ успешно создан", "success");
     fields.value = fields.value.filter((field) => field.key !== "remove");
   } catch (error) {
+    isButtonCancelDisabled.value = false;
+    isButtonSubmitDisabled.value = false;
     const err = error as AxiosError;
     if (err?.response?.status === 422) {
       const fieldErrors: object = (
@@ -151,7 +157,11 @@ function cancel() {
         keyItemName="id"
       >
         <template v-for="(metaInput, name) in metaInputs" v-slot:[name]="data">
-          <BaseInput v-bind="metaInput" v-model="products[data.index][name]" />
+          <BaseInput
+            :disabled="isButtonSubmitDisabled"
+            v-bind="metaInput"
+            v-model="products[data.index][name]"
+          />
         </template>
         <template #remove="data">
           <BaseButton @click="removeProduct(data.item.id)" variant="error">
@@ -162,7 +172,11 @@ function cancel() {
         </template>
       </BaseTable>
 
-      <BaseButton @click="addProduct" variant="outline-primary">
+      <BaseButton
+        :disabled="isButtonSubmitDisabled"
+        @click="addProduct"
+        variant="outline-primary"
+      >
         <BaseIcon>
           <BaseIconPlusCircle />
         </BaseIcon>
@@ -171,8 +185,18 @@ function cancel() {
     </BaseSection>
 
     <BaseButtonToolbar>
-      <BaseButton @click="cancel" variant="secondary">Отмена</BaseButton>
-      <BaseButton type="submit" variant="success">Сохранить</BaseButton>
+      <BaseButton
+        :disabled="isButtonCancelDisabled"
+        @click="cancel"
+        variant="secondary"
+        >Отмена</BaseButton
+      >
+      <BaseButton
+        :disabled="isButtonSubmitDisabled"
+        type="submit"
+        variant="success"
+        >Сохранить</BaseButton
+      >
     </BaseButtonToolbar>
   </form>
 </template>

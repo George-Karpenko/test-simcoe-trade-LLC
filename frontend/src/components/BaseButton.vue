@@ -45,9 +45,30 @@ export default {
   color: #fff;
   background-color: hsl(var(--hue), var(--saturation), var(--lightness));
   border: 2px solid hsl(var(--hue), var(--saturation), var(--lightness));
+  cursor: pointer;
 }
+
+.button:active {
+  --lightness: 69%;
+}
+
 .button.outline {
   color: hsl(var(--hue), var(--saturation), var(--lightness));
   background-color: #fff;
+}
+
+.button:disabled,
+.button[disabled],
+.button.outline:disabled,
+.button.outline[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+@media (hover: hover) {
+  .button:hover {
+    --lightness: 30%;
+  }
 }
 </style>
