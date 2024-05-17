@@ -64,6 +64,7 @@ export default {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
+  cursor: not-allowed;
 }
 
 @media (hover: hover) {
